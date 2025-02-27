@@ -249,12 +249,12 @@ public class ImageCommand extends ProcessStarter implements ErrorConsumer {
   protected void finished(int pReturnCode) throws Exception {
     if (pReturnCode > 0) {
       CommandException ce;
-      if (iErrorText.size() > 0) {
-	ce = new CommandException(iErrorText.get(0));
+      if (iErrorText != null && iErrorText.size() > 0) {
+        ce = new CommandException("return code: " + pReturnCode + " " + iErrorText.get(0));
+        ce.setErrorText(iErrorText);
       } else {
-	ce = new CommandException("return code: " + pReturnCode);
+        ce = new CommandException("return code: " + pReturnCode);
       }
-      ce.setErrorText(iErrorText);
       ce.setReturnCode(pReturnCode);
       throw ce;
     } else {
